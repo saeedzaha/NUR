@@ -1,3 +1,5 @@
+# Pull Request Checklist
+
 The following points apply when adding a new repository to repos.json
 
 - [ ] I ran `./bin/nur format-manifest` after updating `repos.json` (We will use the same script in github actions to make sure we keep the format consistent)

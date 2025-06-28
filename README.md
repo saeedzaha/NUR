@@ -93,7 +93,7 @@ Hello, NUR!
 or
 
 ```console
-$ nix-env -f '<nixpkgs>' -iA nur.repos.mic92.hello-nur
+nix-env -f '<nixpkgs>' -iA nur.repos.mic92.hello-nur
 ```
 
 or
@@ -211,7 +211,7 @@ or search our
 repository, which contains all nix expressions from all users, via
 [github](https://github.com/nix-community/nur-combined/search).
 
-## How to add your own repository.
+## How to add your own repository
 
 First, create a repository that contains a `default.nix` in its top-level directory.
 We also provide a [repository template](https://github.com/nix-community/nur-packages-template) that contains
@@ -273,7 +273,7 @@ nix-shell> find $buildInputs
 ```
 
 ```console
-$ nix-build --arg pkgs 'import <nixpkgs> {}' -A hello-nur
+nix-build --arg pkgs 'import <nixpkgs> {}' -A hello-nur
 ```
 
 For development convenience, you can also set a default value for the pkgs argument:
@@ -286,14 +286,14 @@ For development convenience, you can also set a default value for the pkgs argum
 ```
 
 ```console
-$ nix-build -A hello-nur
+nix-build -A hello-nur
 ```
 
 Add your own repository to the `repos.json` of NUR:
 
 ```console
-$ git clone --depth 1 https://github.com/nix-community/NUR
-$ cd NUR
+git clone --depth 1 https://github.com/nix-community/NUR
+cd NUR
 ```
 
 edit the file `repos.json`:
@@ -316,11 +316,11 @@ the corresponding `repos.json.lock` is updated and the repository is  tested. Th
 also perform an evaluation check, which must be passed for your repository. Commit the changed
 `repos.json` but NOT `repos.json.lock`
 
-```
-$ ./bin/nur format-manifest # ensure repos.json is sorted alphabetically
-$ git add repos.json
-$ git commit -m "add <your-repo-name> repository"
-$ git push
+```console
+./bin/nur format-manifest # ensure repos.json is sorted alphabetically
+git add repos.json
+git commit -m "add <your-repo-name> repository"
+git push
 ```
 
 and open a pull request towards [https://github.com/nix-community/NUR](https://github.com/nix-community/NUR).
@@ -348,7 +348,7 @@ option to a path relative to the repository root:
 
 By default, we only check for repository updates once a day with an automatic
 github action to update our lock file `repos.json.lock`.
-To update NUR faster, you can use our service at https://nur-update.nix-community.org/
+To update NUR faster, you can use our service at <https://nur-update.nix-community.org/>
 after you have pushed an update to your repository, e.g.:
 
 ```console
@@ -422,7 +422,7 @@ NixOS modules should be placed in the `modules` attribute:
 }
 ```
 
-An example can be found [here](https://github.com/Mic92/nur-packages/tree/master/modules).
+An example of NixOS module structure can be found in the [nur-packages modules directory](https://github.com/Mic92/nur-packages/tree/master/modules).
 Modules should be defined as paths, not functions, to avoid conflicts if imported from multiple locations.
 
 A module with no [_class](https://nixos.org/manual/nixpkgs/stable/index.html#module-system-lib-evalModules-param-class) will be assumed to be both a NixOS and Home Manager module. If a module is NixOS or Home Manager specific, the `_class` attribute should be set to `"nixos"` or [`"home-manager"`](https://github.com/nix-community/home-manager/commit/26e72d85e6fbda36bf2266f1447215501ec376fd).
@@ -494,7 +494,8 @@ The repo must be a valid package repo, i.e. its root contains a `default.nix` fi
 
 You can override repositories in two ways:
 
-- With packageOverrides
+* With packageOverrides
+
 ```nix
 {
   inputs.nur.url = "github:nix-community/NUR";
@@ -520,7 +521,9 @@ You can override repositories in two ways:
   ...
 }
 ```
-- With overlay
+
+* With overlay
+
 ```nix
 {
   modules = [
@@ -544,25 +547,28 @@ The repo must contain a `flake.nix` file in addition to a `default.nix`:  [flake
 
 ## Contribution guidelines
 
-- When adding packages to your repository make sure they build and set
+* When adding packages to your repository make sure they build and set
   `meta.broken` attribute to true otherwise.
-- Supply meta attributes as described in the [Nixpkgs manual](https://nixos.org/nixpkgs/manual/#sec-standard-meta-attributes), so
+* Supply meta attributes as described in the [Nixpkgs manual](https://nixos.org/nixpkgs/manual/#sec-standard-meta-attributes), so
   packages can be found by users.
-- Keep your repositories slim - they are downloaded by users and our evaluator
+* Keep your repositories slim - they are downloaded by users and our evaluator
   and needs to be hashed.
-- Reuse packages from Nixpkgs when applicable, so the binary cache can be
+* Reuse packages from Nixpkgs when applicable, so the binary cache can be
   leveraged
 
 Examples for packages that could be in NUR:
 
-- Packages that are only interesting for a small audience
-- Pre-releases
-- Old versions of packages that are no longer in Nixpkgs, but needed for legacy reason (i.e. old versions of GCC/LLVM)
-- Automatic generated package sets (i.e. generate packages sets from PyPi or CPAN)
-- Software with opinionated patches
-- Experiments
+* Packages that are only interesting for a small audience
+* Pre-releases
+* Old versions of packages that are no longer in Nixpkgs, but needed for legacy reason (i.e. old versions of GCC/LLVM)
+* Automatic generated package sets (i.e. generate packages sets from PyPi or CPAN)
+* Software with opinionated patches
+* Experiments
 
 ## Contact
 
 We have a matrix channel on [#nur:nixos.org](https://matrix.to/#/#nur:nixos.org).
-Apart from that we also read posts on [https://discourse.nixos.org](https://discourse.nixos.org/).
+Apart from that we also read posts on [https://discourse.nixos.org][def].
+
+
+[def]: https://discourse.nixos.org/
